@@ -22,13 +22,6 @@
   </a>
 </p>
 
-echo "# bnp" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:holyboom1/bnp.git
-git push -u origin main
 # Jarvis Modularity Assistant
 #### _Command-line interface (CLI) for generating Changelog and build and push app builds
 
