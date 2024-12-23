@@ -25,7 +25,7 @@ class HiveProviderImpl implements HiveProvider {
       final String directoryPath = Directory(executablePath).parent.parent.parent.path;
       final String hivePath = '$directoryPath/bnp_hive';
       Directory(hivePath).createSync();
-      Hive.init(directoryPath);
+      Hive.init(hivePath);
       Hive.registerAdapter(SettingsModelAdapter());
       Hive.registerAdapter(AppSettingsModelAdapter());
 
