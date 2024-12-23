@@ -106,11 +106,8 @@ class BuildService {
         await appLocator<ChangeLogService>().updateChangelog(isNeedCommit: false);
     final String releaseInfo =
         '${updatesInChangelog != null ? updatesInChangelog.newVersion + ':' : ''} ${updatesInChangelog?.changes ?? ''}';
-    final String releaseInfoEscaped =
-        releaseInfo.replaceAll('"', '\\"').replaceAll('\n', ' ').trim();
     final String command =
-        'flutter build ipa ${flavorType == null ? '' : '--flavor=$flavorType ${currentAppSettings!.customBuildArgs}'} '
-        '--release-info="$releaseInfoEscaped" ';
+        'flutter build ipa ${flavorType == null ? '' : '--flavor=$flavorType ${currentAppSettings!.customBuildArgs}'} ';
 
     stdout.writeln(dcli.green('Building iOS for flavor $flavorType, Release Info: $releaseInfo'));
     stdout.writeln(dcli.green('Command to build: $command'));
