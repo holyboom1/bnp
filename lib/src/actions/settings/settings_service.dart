@@ -190,7 +190,10 @@ class SettingsService {
 
     final List<String> customBuildArgs = <String>[];
     void getAdditionalArg() {
-      final String arg = dcli.ask('Enter additional build arg (leave empty to finish):');
+      final String arg = dcli.ask(
+        'Enter additional build arg (leave empty to finish):',
+        required: false,
+      );
       if (arg.isNotEmpty) {
         customBuildArgs.add(arg);
         getAdditionalArg();
