@@ -42,7 +42,7 @@ void main() async {
         await changeLogService.updateChangelog();
         break;
       case 2:
-        settingsService.addNewAppSetting();
+        await settingsService.addNewAppSetting();
         break;
       case 3:
         await settingsService.showSettings();

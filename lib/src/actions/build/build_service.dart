@@ -106,9 +106,11 @@ class BuildService {
         await appLocator<ChangeLogService>().updateChangelog(isNeedCommit: false);
     final String releaseInfo =
         '${updatesInChangelog != null ? updatesInChangelog.newVersion + ':' : ''} ${updatesInChangelog?.changes ?? ''}';
+    final String releaseInfoEscaped =
+        releaseInfo.replaceAll('"', '\\"').replaceAll('\n', ' ').trim();
     final String command =
         'flutter build ipa ${flavorType == null ? '' : '--flavor=$flavorType ${currentAppSettings!.customBuildArgs}'} '
-        '--release-info="$releaseInfo" ';
+        '--release-info="$releaseInfoEscaped" ';
 
     stdout.writeln(dcli.green('Building iOS for flavor $flavorType, Release Info: $releaseInfo'));
     stdout.writeln(dcli.green('Command to build: $command'));
@@ -118,6 +120,12 @@ class BuildService {
 
     final File exportOptionsPlist = File('ios/exportOptions.plist');
     if (!exportOptionsPlist.existsSync()) {
+      final String releaseInfoXmlEscaped = releaseInfo
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&apos;');
       exportOptionsPlist.writeAsStringSync('''
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -128,7 +136,7 @@ class BuildService {
     <key>destination</key>
     <string>upload</string>
     <key>releaseInfo</key>
-    <string>$releaseInfo</string> 
+    <string>$releaseInfoXmlEscaped</string> 
 </dict>
 </plist>
 ''');
