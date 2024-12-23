@@ -151,12 +151,8 @@ class SettingsService {
       return appSettingsActions();
     }
     final String settingKey = appSettingsModel.toJson().keys.elementAt(settingIndex - 1);
-    final String settingValue =
-        appSettingsModel.toJson().values.elementAt(settingIndex - 1).toString();
-
     final String newSettingValue = dcli.ask(
       'Enter new value for $settingKey',
-      defaultValue: settingValue,
       required: false,
     );
 
