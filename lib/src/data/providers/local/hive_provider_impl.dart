@@ -20,7 +20,8 @@ class HiveProviderImpl implements HiveProvider {
   @override
   Future<void> init() async {
     try {
-      final String executablePath = Platform.script.toFilePath();
+      final String executablePath =
+          '${Platform.script.toFilePath().split('/').removeLast().split('/').removeLast()}/bnb_hive';
       final String directoryPath = Directory(executablePath).parent.path;
       Hive.init(directoryPath);
       Hive.registerAdapter(SettingsModelAdapter());
