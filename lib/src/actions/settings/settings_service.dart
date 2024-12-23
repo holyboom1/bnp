@@ -178,18 +178,32 @@ class SettingsService {
       ).interact();
     }
 
+    final String projectName = Input(
+      prompt: 'Enter Project Name',
+      initialText: 'Project Name',
+    ).interact();
+    final List<String> flavors = Input(
+      prompt: 'Enter Flavors (comma separated)',
+      initialText: 'prod,dev,stage',
+    ).interact().split(',');
+
+    final List<String> customBuildArgs = <String>[];
+    void getAdditionalArg() {
+      final arg = Input(
+        prompt: 'Enter custom build args Arg (empty to exit)',
+      ).interact();
+      if (arg.isNotEmpty) {
+        customBuildArgs.add(arg);
+        getAdditionalArg();
+      }
+    }
+
+    getAdditionalArg();
+
     final AppSettingsModel appSettingsModel = AppSettingsModel(
-      projectName: Input(
-        prompt: 'Enter Project Name',
-        initialText: 'Project Name',
-      ).interact(),
-      flavors: Input(
-        prompt: 'Enter Flavors (comma separated)',
-        initialText: 'prod,dev,stage',
-      ).interact().split(','),
-      customBuildArgs: Input(
-        prompt: 'Enter custom build args Args',
-      ).interact(),
+      projectName: projectName,
+      flavors: flavors,
+      customBuildArgs: customBuildArgs.join(' '),
       customBuildScriptPath: Input(
         prompt: 'Enter custom build script path',
       ).interact(),
