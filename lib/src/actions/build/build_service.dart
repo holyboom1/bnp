@@ -108,7 +108,7 @@ class BuildService {
   Future<void> _buildAndroid(String? flavorType) async {
     stdout.writeln(dcli.green('Building Android APK'));
     final String command =
-        'flutter build apk ${flavorType == null ? '' : '--flavor=$flavorType'} ${currentAppSettings!.customBuildArgs}';
+        'flutter build apk ${flavorType == null ? '' : '--flavor=$flavorType --dart-define=environment=$flavorType'} ${currentAppSettings!.customBuildArgs}';
     stdout.writeln(dcli.green('Command to build: $command'));
     await _runCommand(command);
     stdout.writeln(dcli.green('Build APK DONE'));
@@ -120,7 +120,7 @@ class BuildService {
     final String releaseInfo =
         '${updatesInChangelog != null ? updatesInChangelog.newVersion + ':' : ''} ${updatesInChangelog?.changes ?? ''}';
     final String command =
-        'flutter build ipa ${flavorType == null ? '' : '--flavor=$flavorType ${currentAppSettings!.customBuildArgs}'} ';
+        'flutter build ipa ${flavorType == null ? '' : '--flavor=$flavorType --dart-define=environment=$flavorType ${currentAppSettings!.customBuildArgs}'} ';
 
     stdout.writeln(dcli.green('Building iOS for flavor $flavorType, Release Info: $releaseInfo'));
     stdout.writeln(dcli.green('Command to build: $command'));
