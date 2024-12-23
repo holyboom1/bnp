@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:interact_cli/interact_cli.dart';
 import 'package:uuid/uuid.dart';
 
@@ -180,7 +181,7 @@ class SettingsService {
 
     final String projectName = Input(
       prompt: 'Enter Project Name',
-      initialText: 'Project Name',
+      initialText: '',
     ).interact();
     final List<String> flavors = Input(
       prompt: 'Enter Flavors (comma separated)',
@@ -189,9 +190,7 @@ class SettingsService {
 
     final List<String> customBuildArgs = <String>[];
     void getAdditionalArg() {
-      final arg = Input(
-        prompt: 'Enter custom build args Arg (empty to exit)',
-      ).interact();
+      final String arg = ask('Enter additional build arg (leave empty to finish):');
       if (arg.isNotEmpty) {
         customBuildArgs.add(arg);
         getAdditionalArg();
