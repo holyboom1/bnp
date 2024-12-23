@@ -189,24 +189,15 @@ class SettingsService {
       initialText: 'prod,dev,stage',
     ).interact().split(',');
 
-    final List<String> customBuildArgs = <String>[];
-    void getAdditionalArg() {
-      final String arg = dcli.ask(
-        'Enter additional build arg (leave empty to finish):',
-        required: false,
-      );
-      if (arg.isNotEmpty) {
-        customBuildArgs.add(arg);
-        getAdditionalArg();
-      }
-    }
-
-    getAdditionalArg();
+    final String customBuildArgs = dcli.ask(
+      'Enter additional build arg:',
+      required: false,
+    );
 
     final AppSettingsModel appSettingsModel = AppSettingsModel(
       projectName: projectName,
       flavors: flavors,
-      customBuildArgs: customBuildArgs.join(' '),
+      customBuildArgs: customBuildArgs,
       customBuildScriptPath: Input(
         prompt: 'Enter custom build script path',
       ).interact(),
