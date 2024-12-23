@@ -144,7 +144,7 @@ class BuildService {
     <string>app-store-connect</string>
     <key>destination</key>
     <string>upload</string>
-    <key>releaseInfo</key>
+    <key>testingInfo</key>
     <string>$releaseInfoXmlEscaped</string> 
 </dict>
 </plist>
