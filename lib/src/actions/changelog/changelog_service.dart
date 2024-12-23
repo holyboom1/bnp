@@ -115,7 +115,7 @@ class ChangeLogService {
       final int major = int.parse(parts[0]);
       final int minor = int.parse(parts[1]);
       final int patch = int.parse(parts[2]);
-      newVersion = '$major.$minor.${patch + 1}';
+      newVersion = '$major.$minor.$patch';
     } else {
       final List<String> parts = currentVersion.split('+');
       final String baseVersion = parts.first;
