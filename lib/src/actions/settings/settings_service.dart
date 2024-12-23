@@ -154,11 +154,12 @@ class SettingsService {
     final String settingValue =
         appSettingsModel.toJson().values.elementAt(settingIndex - 1).toString();
 
-    final String newSettingValue = Input(
-            prompt: 'Enter new value for $settingKey',
-            defaultValue: settingValue,
-            initialText: settingValue)
-        .interact();
+    final String newSettingValue = dcli.ask(
+      'Enter new value for $settingKey',
+      defaultValue: settingValue,
+      required: false,
+    );
+
     settingsJson[settingKey] = newSettingValue;
     _appSettingsList[selectedApp] = AppSettingsModel.fromJson(settingsJson);
     await appLocator<AppSettingsHiveProvider>().saveSettings(_appSettingsList[selectedApp]);
