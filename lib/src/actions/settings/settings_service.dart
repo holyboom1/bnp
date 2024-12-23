@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dcli/dcli.dart';
+import 'package:dcli/dcli.dart' as dcli;
 import 'package:interact_cli/interact_cli.dart';
 import 'package:uuid/uuid.dart';
 
@@ -190,7 +190,7 @@ class SettingsService {
 
     final List<String> customBuildArgs = <String>[];
     void getAdditionalArg() {
-      final String arg = ask('Enter additional build arg (leave empty to finish):');
+      final String arg = dcli.ask('Enter additional build arg (leave empty to finish):');
       if (arg.isNotEmpty) {
         customBuildArgs.add(arg);
         getAdditionalArg();
