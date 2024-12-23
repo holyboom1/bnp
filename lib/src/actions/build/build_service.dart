@@ -116,14 +116,13 @@ class BuildService {
     stdout.writeln(dcli.green('Build IPA DONE'));
 
     final File exportOptionsPlist = File('ios/exportOptions.plist');
-    if (!exportOptionsPlist.existsSync()) {
-      final String releaseInfoXmlEscaped = releaseInfo
-          .replaceAll('&', '&amp;')
-          .replaceAll('<', '&lt;')
-          .replaceAll('>', '&gt;')
-          .replaceAll('"', '&quot;')
-          .replaceAll("'", '&apos;');
-      exportOptionsPlist.writeAsStringSync('''
+    final String releaseInfoXmlEscaped = releaseInfo
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&apos;');
+    exportOptionsPlist.writeAsStringSync('''
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -137,7 +136,6 @@ class BuildService {
 </dict>
 </plist>
 ''');
-    }
 
     const xcodeCommand =
         'xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive '
