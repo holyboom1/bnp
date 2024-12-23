@@ -84,11 +84,24 @@ class BuildService {
   }
 
   Future<void> _runCommand(String command) async {
+    final SpinnerState runnerIndicator = Spinner(
+      icon: '🚀',
+      leftPrompt: (done) => '',
+      rightPrompt: (state) => switch (state) {
+        SpinnerStateType.inProgress => 'Processing...',
+        SpinnerStateType.done => 'Done!',
+        SpinnerStateType.failed => 'Failed!',
+      },
+    ).interact();
+
     final ProcessResult result = await Process.run('bash', ['-c', command]);
+
     if (result.exitCode != 0) {
+      runnerIndicator.failed();
       stdout.writeln(dcli.red('Error: ${result.stderr}'));
       exit(result.exitCode);
     }
+    runnerIndicator.done();
     stdout.writeln(result.stdout);
   }
 
