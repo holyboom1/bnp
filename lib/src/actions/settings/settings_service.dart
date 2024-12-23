@@ -121,7 +121,7 @@ class SettingsService {
         await showSettings();
         break;
       case 1:
-        addNewAppSetting();
+        await addNewAppSetting();
         break;
       case 2:
         await removeAppSetting();
@@ -164,7 +164,7 @@ class SettingsService {
     await setAppSettings(selectedApp);
   }
 
-  void addNewAppSetting() {
+  Future<void> addNewAppSetting() async {
     String path = Directory.current.path;
     final projectPath = Confirm(
       prompt: 'Is the project path $path?',
@@ -188,7 +188,7 @@ class SettingsService {
         initialText: 'prod,dev,stage',
       ).interact().split(','),
       customBuildArgs: Input(
-        prompt: 'Enter custom build args Args (comma separated)',
+        prompt: 'Enter custom build args Args',
       ).interact(),
       customBuildScriptPath: Input(
         prompt: 'Enter custom build script path',
@@ -225,9 +225,9 @@ class SettingsService {
       appIdInternal: const Uuid().v4(),
     );
     _appSettingsList.add(appSettingsModel);
-    appLocator<AppSettingsHiveProvider>().saveSettings(appSettingsModel);
+    await appLocator<AppSettingsHiveProvider>().saveSettings(appSettingsModel);
     updateDataModels();
-    appSettingsActions();
+    await appSettingsActions();
   }
 
   Future<void> removeAppSetting() async {
