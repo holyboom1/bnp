@@ -43,7 +43,7 @@ mixin _$AppSettingsModel {
   @HiveField(10)
   List<String> get flavors => throw _privateConstructorUsedError;
   @HiveField(11)
-  List<String> get customBuildArgs => throw _privateConstructorUsedError;
+  String get customBuildArgs => throw _privateConstructorUsedError;
   @HiveField(12)
   String get customBuildScriptPath => throw _privateConstructorUsedError;
 
@@ -75,7 +75,7 @@ abstract class $AppSettingsModelCopyWith<$Res> {
       @HiveField(8) String appIdInternal,
       @HiveField(9) String appLocalPath,
       @HiveField(10) List<String> flavors,
-      @HiveField(11) List<String> customBuildArgs,
+      @HiveField(11) String customBuildArgs,
       @HiveField(12) String customBuildScriptPath});
 }
 
@@ -156,7 +156,7 @@ class _$AppSettingsModelCopyWithImpl<$Res, $Val extends AppSettingsModel>
       customBuildArgs: null == customBuildArgs
           ? _value.customBuildArgs
           : customBuildArgs // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       customBuildScriptPath: null == customBuildScriptPath
           ? _value.customBuildScriptPath
           : customBuildScriptPath // ignore: cast_nullable_to_non_nullable
@@ -185,7 +185,7 @@ abstract class _$$AppSettingsModelImplCopyWith<$Res>
       @HiveField(8) String appIdInternal,
       @HiveField(9) String appLocalPath,
       @HiveField(10) List<String> flavors,
-      @HiveField(11) List<String> customBuildArgs,
+      @HiveField(11) String customBuildArgs,
       @HiveField(12) String customBuildScriptPath});
 }
 
@@ -262,9 +262,9 @@ class __$$AppSettingsModelImplCopyWithImpl<$Res>
           : flavors // ignore: cast_nullable_to_non_nullable
               as List<String>,
       customBuildArgs: null == customBuildArgs
-          ? _value._customBuildArgs
+          ? _value.customBuildArgs
           : customBuildArgs // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       customBuildScriptPath: null == customBuildScriptPath
           ? _value.customBuildScriptPath
           : customBuildScriptPath // ignore: cast_nullable_to_non_nullable
@@ -293,10 +293,9 @@ class _$AppSettingsModelImpl implements _AppSettingsModel {
         'preprod',
         'prod'
       ],
-      @HiveField(11) final List<String> customBuildArgs = const <String>[],
+      @HiveField(11) this.customBuildArgs = '',
       @HiveField(12) this.customBuildScriptPath = ''})
-      : _flavors = flavors,
-        _customBuildArgs = customBuildArgs;
+      : _flavors = flavors;
 
   factory _$AppSettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppSettingsModelImplFromJson(json);
@@ -348,16 +347,10 @@ class _$AppSettingsModelImpl implements _AppSettingsModel {
     return EqualUnmodifiableListView(_flavors);
   }
 
-  final List<String> _customBuildArgs;
   @override
   @JsonKey()
   @HiveField(11)
-  List<String> get customBuildArgs {
-    if (_customBuildArgs is EqualUnmodifiableListView) return _customBuildArgs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_customBuildArgs);
-  }
-
+  final String customBuildArgs;
   @override
   @JsonKey()
   @HiveField(12)
@@ -393,8 +386,8 @@ class _$AppSettingsModelImpl implements _AppSettingsModel {
             (identical(other.appLocalPath, appLocalPath) ||
                 other.appLocalPath == appLocalPath) &&
             const DeepCollectionEquality().equals(other._flavors, _flavors) &&
-            const DeepCollectionEquality()
-                .equals(other._customBuildArgs, _customBuildArgs) &&
+            (identical(other.customBuildArgs, customBuildArgs) ||
+                other.customBuildArgs == customBuildArgs) &&
             (identical(other.customBuildScriptPath, customBuildScriptPath) ||
                 other.customBuildScriptPath == customBuildScriptPath));
   }
@@ -414,7 +407,7 @@ class _$AppSettingsModelImpl implements _AppSettingsModel {
       appIdInternal,
       appLocalPath,
       const DeepCollectionEquality().hash(_flavors),
-      const DeepCollectionEquality().hash(_customBuildArgs),
+      customBuildArgs,
       customBuildScriptPath);
 
   /// Create a copy of AppSettingsModel
@@ -447,7 +440,7 @@ abstract class _AppSettingsModel implements AppSettingsModel {
           @HiveField(8) final String appIdInternal,
           @HiveField(9) final String appLocalPath,
           @HiveField(10) final List<String> flavors,
-          @HiveField(11) final List<String> customBuildArgs,
+          @HiveField(11) final String customBuildArgs,
           @HiveField(12) final String customBuildScriptPath}) =
       _$AppSettingsModelImpl;
 
@@ -489,7 +482,7 @@ abstract class _AppSettingsModel implements AppSettingsModel {
   List<String> get flavors;
   @override
   @HiveField(11)
-  List<String> get customBuildArgs;
+  String get customBuildArgs;
   @override
   @HiveField(12)
   String get customBuildScriptPath;

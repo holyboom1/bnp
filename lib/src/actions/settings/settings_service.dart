@@ -189,7 +189,7 @@ class SettingsService {
       ).interact().split(','),
       customBuildArgs: Input(
         prompt: 'Enter custom build args Args (comma separated)',
-      ).interact().split(','),
+      ).interact(),
       customBuildScriptPath: Input(
         prompt: 'Enter custom build script path',
       ).interact(),

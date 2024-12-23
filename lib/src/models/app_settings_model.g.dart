@@ -28,7 +28,7 @@ class AppSettingsModelAdapter extends TypeAdapter<AppSettingsModel> {
       appIdInternal: fields[8] as String,
       appLocalPath: fields[9] as String,
       flavors: (fields[10] as List).cast<String>(),
-      customBuildArgs: (fields[11] as List).cast<String>(),
+      customBuildArgs: fields[11] as String,
       customBuildScriptPath: fields[12] as String,
     );
   }
@@ -98,10 +98,7 @@ _$AppSettingsModelImpl _$$AppSettingsModelImplFromJson(
               ?.map((e) => e as String)
               .toList() ??
           const <String>['dev', 'stage', 'preprod', 'prod'],
-      customBuildArgs: (json['customBuildArgs'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const <String>[],
+      customBuildArgs: json['customBuildArgs'] as String? ?? '',
       customBuildScriptPath: json['customBuildScriptPath'] as String? ?? '',
     );
 

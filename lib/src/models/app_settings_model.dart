@@ -19,7 +19,7 @@ class AppSettingsModel with _$AppSettingsModel {
     @HiveField(8) @Default('') String appIdInternal,
     @HiveField(9) @Default('') String appLocalPath,
     @HiveField(10) @Default(<String>['dev', 'stage', 'preprod', 'prod']) List<String> flavors,
-    @HiveField(11) @Default(<String>[]) List<String> customBuildArgs,
+    @HiveField(11) @Default('') String customBuildArgs,
     @HiveField(12) @Default('') String customBuildScriptPath,
   }) = _AppSettingsModel;
 
