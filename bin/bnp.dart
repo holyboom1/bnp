@@ -27,6 +27,7 @@ void main() async {
       prompt: 'Build and PUSH:CLI for build and push Flutter apps and update ChangeLogs',
       options: [
         'Build App and Push',
+        'Flutter actions',
         'Update Changelog',
         'Configure New App Settings',
         'Settings',
