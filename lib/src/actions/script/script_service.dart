@@ -69,7 +69,9 @@ class ScriptService {
     /// Make recursive search for modules
     final List<FileSystemEntity> modules = current.listSync(recursive: true);
     for (final FileSystemEntity module in modules) {
-      if (module.path.contains('pubspec.yaml')) {
+      if (module.path.contains('pubspec.yaml') &&
+          !module.path.contains('.flutter.git') &&
+          !module.path.contains('symlinks')) {
         modulesPath.add(module.parent.path);
       }
     }
