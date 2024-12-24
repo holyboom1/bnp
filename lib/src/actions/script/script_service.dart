@@ -80,15 +80,12 @@ class ScriptService {
 
   Future<void> _flutterPubGetSingleModule() async {
     final List<String> modules = findModules();
-    final int moduleIndex = Select(
-      prompt: 'Select Module:',
-      options: modules,
-    ).interact();
+
     final int module =
         Select(prompt: 'Select Module:', options: modules.map((e) => e.split('/').last).toList())
             .interact();
-    final String moduleToCommand = modules[moduleIndex];
-    await runCommand('cd $module && flutter pub get');
+    final String moduleToCommand = modules[module];
+    await runCommand('cd $moduleToCommand && flutter pub get');
   }
 
   static Future<void> runCommand(String command) async {
