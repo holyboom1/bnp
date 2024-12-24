@@ -84,9 +84,10 @@ class ScriptService {
       prompt: 'Select Module:',
       options: modules,
     ).interact();
-    final int module = Select(prompt: 'Select Module:', options: modules).interact();
+    final int module =
+        Select(prompt: 'Select Module:', options: modules.map((e) => e.split('/').last).toList())
+            .interact();
     final String moduleToCommand = modules[moduleIndex];
-    print('#modules# : ${modules}');
     await runCommand('cd $module && flutter pub get');
   }
 
