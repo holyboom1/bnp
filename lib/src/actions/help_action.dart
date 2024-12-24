@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart' as dcli;
 
-import '../services/script_service.dart';
+import '../service/utils.dart';
 
 Future<void> helpAction() async {
   // Check if the Dart version is in the correct range
-  if (!await ScriptService.isDartVersionInRange('2.19.5', '4.0.0')) {
+  if (!await isDartVersionInRange('2.19.5', '4.0.0')) {
     stdout.writeln(dcli.red('Dart version not in range 2.19.5 - 4.0.0'));
     return;
   }

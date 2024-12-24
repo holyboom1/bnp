@@ -4,15 +4,16 @@ import 'package:build_and_push/src/actions/build/build_service.dart';
 import 'package:build_and_push/src/actions/changelog/changelog_service.dart';
 import 'package:build_and_push/src/actions/git/git_service.dart';
 import 'package:build_and_push/src/actions/help_action.dart';
+import 'package:build_and_push/src/actions/script/script_service.dart';
 import 'package:build_and_push/src/actions/settings/settings_service.dart';
 import 'package:build_and_push/src/di/app_di.dart';
-import 'package:build_and_push/src/services/script_service.dart';
+import 'package:build_and_push/src/service/utils.dart';
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:interact_cli/interact_cli.dart';
 
 // Main method
 void main() async {
-  if (!await ScriptService.isDartVersionInRange('3.0.0', '4.0.0')) {
+  if (!await isDartVersionInRange('3.0.0', '4.0.0')) {
     stdout.writeln(dcli.red('Dart version not in range 3.0.0 - 4.0.0'));
     return;
   }
@@ -21,6 +22,7 @@ void main() async {
   final ChangeLogService changeLogService = ChangeLogService();
   final BuildService buildService = BuildService();
   final GitService gitService = GitService();
+  final ScriptService scriptService = ScriptService();
 
   Future<void> run() async {
     final int input = Select(
@@ -39,11 +41,9 @@ void main() async {
       case 0:
         await buildService.buildApp();
         break;
-
       case 1:
-        await buildService.buildApp();
+        await scriptService.prebuildAction();
         break;
-
       case 2:
         await changeLogService.updateChangelog();
         break;

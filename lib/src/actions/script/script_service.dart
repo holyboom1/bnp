@@ -3,7 +3,13 @@ import 'dart:io';
 import 'package:dcli/dcli.dart' as dcli;
 import 'package:interact_cli/interact_cli.dart';
 
+import '../../di/app_di.dart';
+
 class ScriptService {
+  ScriptService() {
+    appLocator.registerSingleton<ScriptService>(this);
+  }
+
   Future<void> prebuildAction() async {
     final int input = Select(
       prompt: 'Choose option:',
@@ -96,11 +102,11 @@ class ScriptService {
     if (Platform.isMacOS || Platform.isLinux) {
       await _runBashCommand(command, runnerIndicator);
     } else if (Platform.isWindows) {
-      await _runCommand(command, runnerIndicator);
+      await _runPwshCommand(command, runnerIndicator);
     }
   }
 
-  static Future<void> _runCommand(String command, SpinnerState runnerIndicator) async {
+  static Future<void> _runPwshCommand(String command, SpinnerState runnerIndicator) async {
     final ProcessResult result = await Process.run('pwsh', ['-c', command]);
     if (result.exitCode != 0) {
       runnerIndicator.failed();
