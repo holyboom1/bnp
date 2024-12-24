@@ -178,7 +178,6 @@ class SettingsService {
 
     final String projectName = Input(
       prompt: 'Enter Project Name',
-      initialText: '',
     ).interact();
     final List<String> flavors = Input(
       prompt: 'Enter Flavors (comma separated)',

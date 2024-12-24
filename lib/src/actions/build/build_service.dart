@@ -6,6 +6,7 @@ import 'package:interact_cli/interact_cli.dart';
 import '../../di/app_di.dart';
 import '../../models/app_settings_model.dart';
 import '../changelog/changelog_service.dart';
+import '../script/script_service.dart';
 import '../settings/settings_service.dart';
 
 enum PlatformType {
@@ -83,34 +84,12 @@ class BuildService {
     return currentAppSettings!.flavors[input];
   }
 
-  Future<void> _runCommand(String command) async {
-    final SpinnerState runnerIndicator = Spinner(
-      icon: '🚀',
-      leftPrompt: (done) => '',
-      rightPrompt: (state) => switch (state) {
-        SpinnerStateType.inProgress => 'Processing...',
-        SpinnerStateType.done => 'Done!',
-        SpinnerStateType.failed => 'Failed!',
-      },
-    ).interact();
-
-    final ProcessResult result = await Process.run('bash', ['-c', command]);
-
-    if (result.exitCode != 0) {
-      runnerIndicator.failed();
-      stdout.writeln(dcli.red('Error: ${result.stderr}'));
-      exit(result.exitCode);
-    }
-    runnerIndicator.done();
-    stdout.writeln(result.stdout);
-  }
-
   Future<void> _buildAndroid(String? flavorType) async {
     stdout.writeln(dcli.green('Building Android APK'));
     final String command =
         'flutter build apk ${flavorType == null ? '' : '--flavor=$flavorType --dart-define=environment=$flavorType'} ${currentAppSettings!.customBuildArgs}';
     stdout.writeln(dcli.green('Command to build: $command'));
-    await _runCommand(command);
+    await ScriptService.runCommand(command);
     stdout.writeln(dcli.green('Build APK DONE'));
   }
 
@@ -125,7 +104,7 @@ class BuildService {
     stdout.writeln(dcli.green('Building iOS for flavor $flavorType, Release Info: $releaseInfo'));
     stdout.writeln(dcli.green('Command to build: $command'));
 
-    await _runCommand(command);
+    await ScriptService.runCommand(command);
     stdout.writeln(dcli.green('Build IPA DONE'));
 
     final File exportOptionsPlist = File('ios/exportOptions.plist');
@@ -157,7 +136,7 @@ class BuildService {
 
     stdout.writeln(dcli.green('Exporting archive with release info: $releaseInfo'));
     stdout.writeln(dcli.green('Command to export: $xcodeCommand'));
-    await _runCommand(xcodeCommand);
+    await ScriptService.runCommand(xcodeCommand);
     stdout.writeln(dcli.green('Exporting archive DONE'));
   }
 

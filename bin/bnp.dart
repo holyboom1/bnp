@@ -38,16 +38,21 @@ void main() async {
       case 0:
         await buildService.buildApp();
         break;
+
       case 1:
+        await buildService.buildApp();
+        break;
+
+      case 2:
         await changeLogService.updateChangelog();
         break;
-      case 2:
+      case 3:
         await settingsService.addNewAppSetting();
         break;
-      case 3:
+      case 4:
         await settingsService.showSettings();
         break;
-      case 4:
+      case 5:
         await helpAction();
         break;
       default:
