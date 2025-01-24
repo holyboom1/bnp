@@ -24,43 +24,47 @@ void main() async {
   final GitService gitService = GitService();
   final ScriptService scriptService = ScriptService();
 
-  Future<void> run() async {
-    final int input = Select(
-      prompt: 'Build and PUSH:CLI for build and push Flutter apps and update ChangeLogs',
-      options: [
-        'Build App and Push',
-        'Flutter actions',
-        'Update Changelog',
-        'Configure New App Settings',
-        'Settings',
-        'Help',
-        'Exit',
-      ],
-    ).interact();
-    switch (input) {
-      case 0:
-        await buildService.buildApp();
-        break;
-      case 1:
-        await scriptService.prebuildAction();
-        break;
-      case 2:
-        await changeLogService.updateChangelog();
-        break;
-      case 3:
-        await settingsService.addNewAppSetting();
-        break;
-      case 4:
-        await settingsService.showSettings();
-        break;
-      case 5:
-        await helpAction();
-        break;
-      default:
-        exit(0);
+  try {
+    Future<void> run() async {
+      final int input = Select(
+        prompt: 'Build and PUSH:CLI for build and push Flutter apps and update ChangeLogs',
+        options: [
+          'Build App and Push',
+          'Flutter actions',
+          'Update Changelog',
+          'Configure New App Settings',
+          'Settings',
+          'Help',
+          'Exit',
+        ],
+      ).interact();
+      switch (input) {
+        case 0:
+          await buildService.buildApp();
+          break;
+        case 1:
+          await scriptService.prebuildAction();
+          break;
+        case 2:
+          await changeLogService.updateChangelog();
+          break;
+        case 3:
+          await settingsService.addNewAppSetting();
+          break;
+        case 4:
+          await settingsService.showSettings();
+          break;
+        case 5:
+          await helpAction();
+          break;
+        default:
+          exit(0);
+      }
+      await run();
     }
-    await run();
-  }
 
-  await run();
+    await run();
+  } catch (e) {
+    stdout.writeln(dcli.red('Error: $e'));
+  }
 }
