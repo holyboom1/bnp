@@ -48,13 +48,22 @@ class GitService {
       exit(1);
     }
     final gitType = GitType.getGitType(gitUrl);
-    switch (gitType) {
-      case GitType.gitlab:
-        return fetchGitLabMergeRequest(
-            appSettings: appSettings, lastBuildDate: lastBuildDate, privateToken: privateToken);
-      case GitType.github:
-        return fetchGitHubMergeRequest();
+    try{
+      switch (gitType) {
+        case GitType.gitlab:
+          return fetchGitLabMergeRequest(
+              appSettings: appSettings, lastBuildDate: lastBuildDate, privateToken: privateToken);
+        case GitType.github:
+          return fetchGitHubMergeRequest();
+      }
     }
+    catch(e, s ){
+      stdout.writeln(dcli.red('Error: $e'));
+      stdout.writeln(dcli.red('Stack: $s'));
+
+      exit(1);
+    }
+
   }
 
   Future<List<MergeRequestModel>> fetchGitLabMergeRequest({

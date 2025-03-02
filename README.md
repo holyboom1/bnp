@@ -46,3 +46,6 @@ bnp
 ```
 
 ###### [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C8Z5SA5)
+
+
+dart pub global activate --source git https://github.com/holyboom1/bnp.git
